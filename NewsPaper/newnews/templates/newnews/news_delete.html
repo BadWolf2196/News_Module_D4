@@ -1,0 +1,53 @@
+{% extends 'newnews/default.html' %}
+ 
+{% block title %} News {% endblock title %}
+{% block content %}
+<h2>Вы действительно хотите удалить данную новость?</h2>
+ <table>
+            <tr>
+                <td>
+                    <h4>Заголовок</h4>
+                </td>
+                <td>
+                    <h4>Автор</h4>
+                </td>
+                <td>
+                    <h4>Дата публикации</h4>
+                </td>
+                <td>
+                    <h4>Описание</h4>
+                </td>
+                <td>
+                    <h4>Тип</h4>
+                </td>
+                <td>
+                    <h4>Рейтинг</h4>
+                </td>
+            </tr>
+        {% for new in news %}
+            <tr>
+                <td>
+                    {{ new.Post_title }}
+                </td>
+                 <td>
+                    {{ new.author }}
+                </td>
+                <td>
+                    {{ new.Post_time|date:'d-M-Y h:m:s'}}
+                </td>
+                <td>
+                    {{ new.Post_text|truncatechars:50 }}
+                </td>
+                <td>
+                    {{ new.Post_type }}
+                </td>
+                <td>
+                    {{ new.Post_rating }}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+{% endblock content %}

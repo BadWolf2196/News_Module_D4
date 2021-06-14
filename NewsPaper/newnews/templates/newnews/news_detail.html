@@ -1,0 +1,54 @@
+{% extends 'newnews/default.html' %}
+
+
+{{% block title %} News {% endblock title %}
+
+{% block content %}
+
+        <table>
+            <thead>
+                <td>
+                    <h4>Заголовок</h4>
+                </td>
+                <td>
+                    <h4>Автор</h4>
+                </td>
+                <td>
+                    <h4>Дата публикации</h4>
+                </td>
+                <td>
+                    <h4>Описание</h4>
+                </td>
+                <td>
+                    <h4>Тип</h4>
+                </td>
+                <td>
+                    <h4>Рейтинг</h4>
+                </td>
+            </thead>
+        {% for new in news %}
+            <thead>
+                <td>
+                    {{ new.Post_title }}
+                </td>
+                 <td>
+                    {{ new.author }}
+                </td>
+                <td>
+                    {{ new.Post_time|date:'d-M-Y h:m:s'}}
+                </td>
+                <td>
+                    {{ new.Post_text|truncatechars:50 }}
+                </td>
+                <td>
+                    {{ new.Post_type }}
+                </td>
+                <td>
+                    {{ new.Post_rating }}
+                </td>
+            </thead>
+        {% endfor %}
+        </table>
+
+
+{% endblock content %}
