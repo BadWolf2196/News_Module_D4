@@ -13,7 +13,7 @@ class NewsList(ListView):
     context_object_name = 'news'
     ordering = ['-Post_time']
     paginate_by = 1
-    form_class = NewsForm
+
 
 
 
@@ -25,13 +25,7 @@ class NewsList(ListView):
         context['form'] = NewsForm()
         return context
 
-    def news(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)  # создаём новую форму, забиваем в неё данные из POST-запроса
 
-        if form.is_valid():  # если пользователь ввёл всё правильно и нигде не ошибся, то сохраняем новый товар
-            form.save()
-
-        return super().get(request, *args, **kwargs)
 
 class NewsDetailView(DetailView):
     model = Post
@@ -39,13 +33,14 @@ class NewsDetailView(DetailView):
     context_object_name = 'news_detail'
     queryset = Post.objects.all()
 
+
     def get_object(self, **kwargs):
         id = self.kwargs.get('pk')
         return Post.objects.get(pk=id)
 
 
 class NewsCreateView(CreateView):
-    template_name = 'news_create.html'
+    template_name = 'newnews/news_create.html'
     form_class = NewsForm
     success_url = '/news/'
 
@@ -55,6 +50,7 @@ class NewsCreateView(CreateView):
 # дженерик для редактирования объекта
 class NewsUpdateView(UpdateView):
     template_name = 'newnews/news_create.html'
+    success_url = '/news/'
     form_class = NewsForm
 
     # метод get_object мы используем вместо queryset, чтобы получить информацию об объекте, который мы собираемся редактировать
@@ -75,23 +71,16 @@ class NewsDeleteView(DeleteView):
 class Search(ListView):
     model = Post
     template_name = 'search.html'
-    context_object_name = 'search'
+    context_object_name = 'news'
     queryset = Post.objects.order_by('-Post_time')
-    paginate_by = 1
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())
         context['time_now'] = datetime.utcnow()  # добавим переменную текущей даты time_now
-
-        context['categories'] = Category.objects.all()
+        context['categories'] = PostCategory.objects.all()
         context['form'] = NewsForm()
         return context
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)  # создаём новую форму, забиваем в неё данные из POST-запроса
 
-        if form.is_valid():  # если пользователь ввёл всё правильно и нигде не ошибся, то сохраняем новый товар
-            form.save()
-
-        return super().get(request, *args, **kwargs)
