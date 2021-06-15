@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from datetime import datetime
-from .models import Post, Category
+from .models import Post, Category, PostCategory
 from django.shortcuts import render
 from django.views import View  # импортируем простую вьюшку
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage  # импортируем класс, позволяющий удобно осуществлять постраничный вывод
@@ -15,16 +15,17 @@ class NewsList(ListView):
     paginate_by = 1
     form_class = NewsForm
 
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = NewsFilter(self.request.GET, queryset=self.get_queryset())
         context['time_now'] = datetime.utcnow()  # добавим переменную текущей даты time_now
-
-        context['categories'] = Category.objects.all()
+        context['categories'] = PostCategory.objects.all()
         context['form'] = NewsForm()
         return context
 
-    def post(self, request, *args, **kwargs):
+    def news(self, request, *args, **kwargs):
         form = self.form_class(request.POST)  # создаём новую форму, забиваем в неё данные из POST-запроса
 
         if form.is_valid():  # если пользователь ввёл всё правильно и нигде не ошибся, то сохраняем новый товар
@@ -33,7 +34,9 @@ class NewsList(ListView):
         return super().get(request, *args, **kwargs)
 
 class NewsDetailView(DetailView):
+    model = Post
     template_name = 'newnews/news_detail.html'
+    context_object_name = 'news_detail'
     queryset = Post.objects.all()
 
     def get_object(self, **kwargs):
@@ -44,6 +47,7 @@ class NewsDetailView(DetailView):
 class NewsCreateView(CreateView):
     template_name = 'news_create.html'
     form_class = NewsForm
+    success_url = '/news/'
 
 
 

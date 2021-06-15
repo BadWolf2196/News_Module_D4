@@ -57,10 +57,10 @@ class Post(models.Model):
     Post_category = models.ManyToManyField(Category, through='PostCategory')
 
     def get_absolute_url(self):
-        return f'/new/{self.id}'
+        return f'/news/{self.id}'
 
     def __str__(self):
-        return f'{self.Post_title.title()}: {self.Post_text[:20]}'
+        return f'{self.title} ~ {self.text[:50]}...'
 
 
 
