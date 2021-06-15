@@ -1,12 +1,11 @@
 {% extends 'newnews/default.html' %}
 
 
-{{% block title %} News {% endblock title %}
+{% block title %} {{ new.Post_title }} {% endblock title %}
 
 {% block content %}
-
         <table>
-            <thead>
+            <tr>
                 <td>
                     <h4>Заголовок</h4>
                 </td>
@@ -25,9 +24,8 @@
                 <td>
                     <h4>Рейтинг</h4>
                 </td>
-            </thead>
-        {% for new in news %}
-            <thead>
+            </tr>
+            <tr>
                 <td>
                     {{ new.Post_title }}
                 </td>
@@ -46,9 +44,6 @@
                 <td>
                     {{ new.Post_rating }}
                 </td>
-            </thead>
-        {% endfor %}
+            </tr>
         </table>
-
-
 {% endblock content %}

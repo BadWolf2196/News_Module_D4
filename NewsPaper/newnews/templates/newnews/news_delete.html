@@ -24,7 +24,6 @@
                     <h4>Рейтинг</h4>
                 </td>
             </tr>
-        {% for new in news %}
             <tr>
                 <td>
                     {{ new.Post_title }}
@@ -45,7 +44,6 @@
                     {{ new.Post_rating }}
                 </td>
             </tr>
-        {% endfor %}
         </table>
 <form method="POST">
     {% csrf_token %}

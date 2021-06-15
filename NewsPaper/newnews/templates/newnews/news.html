@@ -16,7 +16,7 @@
     <hr>
     {% if news %}
         <table>
-            <thead>
+            <tr>
                 <td>
                     <h4>Заголовок</h4>
                 </td>
@@ -35,13 +35,12 @@
                 <td>
                     <h4>Рейтинг</h4>
                 </td>
-            </thead>
+            </tr>
         {% for new in news %}
-            <thead>
+            <tr>
                 <td>
                     <a href="{% url 'news_detail' new.id %}">{{ new.Post_title }}</a>
                     <a href="{% url 'news_update' new.id %}"><u>Редактировать</u></a> <!-- добавим ссылку на редактирование товара-->
-
                      <a href="{% url 'news_delete' new.id %}"><u> Удалить </u></a> <!-- добавим ссылку на удаление товара-->
                 </td>
                  <td>
@@ -59,7 +58,7 @@
                 <td>
                     {{ new.Post_rating }}
                 </td>
-            </thead>
+            </tr>
         {% endfor %}
         </table>
 {% else %}
