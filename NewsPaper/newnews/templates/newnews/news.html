@@ -6,10 +6,8 @@
 {% block content %}
 
 
-    <a href="/news/search">Поиск</a>
-<hr>
-    <a href="/news/add">Добавить новость</a>
-<hr>
+
+
     <h1>Все новости</h1>
 
     <h3>Количество новостей всего: {{ news|length }}</h3>
@@ -36,27 +34,27 @@
                     <h4>Рейтинг</h4>
                 </td>
             </tr>
-        {% for new in news %}
+        {% for news_detail in news %}
             <tr>
                 <td>
-                    <a href="{% url 'news_detail' new.id %}">{{ new.Post_title }}</a>
-                    <a href="{% url 'news_update' new.id %}"><u>Редактировать</u></a> <!-- добавим ссылку на редактирование товара-->
-                     <a href="{% url 'news_delete' new.id %}"><u> Удалить </u></a> <!-- добавим ссылку на удаление товара-->
+                    <a href="{% url 'news_detail' news_detail.id %}">{{ news_detail.Post_title }}</a>
+                    <a href="{% url 'news_create' news_detail.id %}"><u>Редактировать</u></a>
+                    <a href="{% url 'news_delete' news_detail.id %}"><u> Удалить </u></a>
                 </td>
                  <td>
-                    {{ new.author }}
+                    {{ news_detail.author }}
                 </td>
                 <td>
-                    {{ new.Post_time|date:'d-M-Y h:m:s'}}
+                    {{ news_detail.Post_time|date:'d-M-Y h:m:s'}}
                 </td>
                 <td>
-                    {{ new.Post_text|truncatechars:50 }}
+                    {{ news_detail.Post_text|truncatechars:50 }}
                 </td>
                 <td>
-                    {{ new.Post_type }}
+                    {{ news_detail.Post_type }}
                 </td>
                 <td>
-                    {{ new.Post_rating }}
+                    {{ news_detail.Post_rating }}
                 </td>
             </tr>
         {% endfor %}

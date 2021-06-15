@@ -1,50 +1,15 @@
 {% extends 'newnews/default.html' %}
- 
+{% load custom_filters %}
+
 {% block title %} News {% endblock title %}
 {% block content %}
 <h2>Вы действительно хотите удалить данную новость?</h2>
- <table>
-            <tr>
-                <td>
-                    <h4>Заголовок</h4>
-                </td>
-                <td>
-                    <h4>Автор</h4>
-                </td>
-                <td>
-                    <h4>Дата публикации</h4>
-                </td>
-                <td>
-                    <h4>Описание</h4>
-                </td>
-                <td>
-                    <h4>Тип</h4>
-                </td>
-                <td>
-                    <h4>Рейтинг</h4>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{ new.Post_title }}
-                </td>
-                 <td>
-                    {{ new.author }}
-                </td>
-                <td>
-                    {{ new.Post_time|date:'d-M-Y h:m:s'}}
-                </td>
-                <td>
-                    {{ new.Post_text|truncatechars:50 }}
-                </td>
-                <td>
-                    {{ new.Post_type }}
-                </td>
-                <td>
-                    {{ new.Post_rating }}
-                </td>
-            </tr>
-        </table>
+
+<h3>{{ news_detail.Post_title }}</h3>
+<h4> {{ news_detail.Post_text }} </h4>
+{{news_detail.Post_time|date:'d-M-Y h:m:s'}}
+<br>Рейтинг:{{news_detail.Post_rating}}
+
 <form method="POST">
     {% csrf_token %}
     <input type="submit" value="подтвердить"></form>
